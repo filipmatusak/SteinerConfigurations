@@ -17,7 +17,7 @@ public:
 
     bool checkSolution(vector<vector<int> > &graph,
                        vector<pair<pair<int,int>, int> > &coloring,
-                       set<set<int> > configuration){
+                       set<set<int> > &configuration){
         vector<set<int> > colorsForVertex(graph.size());
         For(i, 0, coloring.size()){
             pair<int,int> edge = coloring[i].first;

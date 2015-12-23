@@ -1,15 +1,12 @@
 
-#ifndef GRAFY_TESTER_H
-#define GRAFY_TESTER_H
-
 #include "../common.h"
 #include "ColoringTester.h"
 
 using namespace std;
 
-class BruteForcer : public ColoringTester{
+class BruteForcer_C_10_6 : public ColoringTester {
 public:
-    BruteForcer(){ }
+    BruteForcer_C_10_6(){ }
 
     vector<pair<int,int> > edges;
     vector<vector<int> > graph;
@@ -19,7 +16,7 @@ public:
     unordered_map<int, int> colorForEdge;
     vector<vector<pair<pair<int,int>, int> > > colorings;
     map<set<int>, set<int> > possibleColors;
-    set<int> allColors, empty;
+    set<int> allColors, empty, forStart;
     int numberOfColors;
     int lookUps = 0;
 
@@ -65,6 +62,9 @@ private:
             twoColorDefineThird[{c[1], c[2]}] = c[0];
         }
         For(i, 0, numberOfColors) allColors.insert(i);
+
+        forStart.insert(0);
+        forStart.insert(1);
     }
 
     void countPossibleColors(){
@@ -181,6 +181,8 @@ private:
     }
 
     set<int> &getPossibleColors(int k){
+        if(k < 2) return forStart;
+
         pair<int,int> edge = edges[k];
         set<int> around = usedColorsAroundVertex[edge.first];
         for(auto x: usedColorsAroundVertex[edge.second]) around.insert(x);
@@ -284,7 +286,3 @@ private:
         return false;
     }
 };
-
-
-#endif //GRAFY_TESTER_H
-
