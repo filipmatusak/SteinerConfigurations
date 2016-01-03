@@ -19,8 +19,6 @@
 
 using namespace std;
 
-//string graph_path = "./../graphs/";
-
 struct pairhash {
 public:
     template <typename T, typename U>
