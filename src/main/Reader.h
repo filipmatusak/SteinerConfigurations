@@ -23,7 +23,6 @@ public:
 
         int n;
         in >> n;
-        in >> n;
         testComment(in);
         cout << "n = " << n << endl;
 
@@ -43,6 +42,8 @@ public:
     //    {char c; in >> c; cout << c << endl;}
         in >> n;
         testComment(in);
+        in >> n;
+        testComment(in);
         cout << n << "\n";
 
 
@@ -54,6 +55,7 @@ public:
                 in >> x;
                 graph[i].push_back(x);
             }
+
         }
 
 

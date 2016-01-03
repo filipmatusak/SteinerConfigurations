@@ -11,14 +11,10 @@ int main() {
 
     Reader * reader = new Reader();
     ColoringTester * tester = new BruteForcer_C_10_6();
-  //  BruteForcer * tester = new BruteForcer();
     Verifier * verifier = new Verifier();
 
-    string inputGraph = "./../graphs/SS7-6.34";
+    string inputGraph = (string)"./../graphs/2/" + "SS4A.46";
     string inputConfiguration = "./../configurations/C(10,6).txt";
-
-//    string inputGraph = "./../graphs/g1.txt";
-//    string inputConfiguration = "./../configurations/conf1.txt";
 
     vector<vector<vector<int> > > graphs = reader->readGraphs(inputGraph);
     set<set<int> > configuration = reader->readStainerConfiguration(inputConfiguration);

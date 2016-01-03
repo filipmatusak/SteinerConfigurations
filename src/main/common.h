@@ -17,6 +17,10 @@
 
 #define For(i, from, to) for(int (i) = (from); (i) < (to); (i)++)
 
+using namespace std;
+
+//string graph_path = "./../graphs/";
+
 struct pairhash {
 public:
     template <typename T, typename U>
