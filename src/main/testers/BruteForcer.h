@@ -1,6 +1,4 @@
 
-#ifndef GRAFY_TESTER_H
-#define GRAFY_TESTER_H
 
 #include "../common.h"
 #include "ColoringTester.h"
@@ -21,9 +19,9 @@ public:
     map<set<int>, set<int> > possibleColors;
     set<int> allColors, empty;
     int numberOfColors;
-    int lookUps = 0;
+    long long lookUps = 0;
 
-    bool test(const vector<vector<int> > graph_, const set<set<int> > config_){
+    virtual bool test(const vector<vector<int> > graph_, const set<set<int> > config_){
 
         cout << "preparing" << endl;
 
@@ -47,8 +45,7 @@ public:
         return colorings[0];
     }
 
-private:
-    void prepareContainers(){
+    virtual void prepareContainers(){
         usedColorsAroundVertex.clear();
         colorForEdge.clear();
         twoColorDefineThird.clear();
@@ -67,7 +64,7 @@ private:
         For(i, 0, numberOfColors) allColors.insert(i);
     }
 
-    void countPossibleColors(){
+    virtual void countPossibleColors(){
         //for one color
         For(i, 0, numberOfColors){
             set<int> group, pos;
@@ -103,8 +100,7 @@ private:
         }*/
     }
 
-
-    void findAndAddShortWay(vector<vector<int>> &g, unordered_set<pair<int, int>, pairhash> &usedEdges,
+    virtual void findAndAddShortWay(vector<vector<int>> &g, unordered_set<pair<int, int>, pairhash> &usedEdges,
                             unordered_set<int> &usedVerices, vector<pair<int, int> > &res) {
         vector<int> dist(g.size());
         For(i, 0, dist.size()) dist[i] = 1 << 30;
@@ -149,7 +145,7 @@ private:
         return;
     }
 
-    vector<pair<int,int> > getEdges(){
+    virtual vector<pair<int,int> > getEdges(){
         cout << "Sorting edges\n";
         unordered_set<pair<int, int>, pairhash> usedEdges;
         unordered_set<int> usedVertices;
@@ -157,30 +153,31 @@ private:
         vector<pair<int,int> > res;
 
         srand((unsigned int) time(NULL));
-        usedVertices.insert(rand() % g.size());
-        cout << "Random start point: " << *usedVertices.begin() << endl;
+        int randomStartPoint = rand() % g.size();
+        usedVertices.insert(randomStartPoint);
+        cout << "Random start point: " << randomStartPoint << endl;
 
         cout << "start\n";
         while(usedEdges.size() < g.size()*3/2) {
-          //  cout << "res size = " << res.size() << endl;
+            //  cout << "res size = " << res.size() << endl;
             findAndAddShortWay(g, usedEdges, usedVertices, res);
         }
 
 
-     /*   For(i, 0, graph.size()){
-            For(j, 0, graph[i].size()){
-                pair<int,int> p = {i, graph[i][j]};
-                if(used.find(p) != used.end() || used.find({p.second, p.first}) != used.end()) continue;
-                if(p.first <= p.second) res.push_back(p);
-                else res.push_back({p.second, p.first});
-                used.insert(p);
-            }
-        }*/
+        /*   For(i, 0, graph.size()){
+               For(j, 0, graph[i].size()){
+                   pair<int,int> p = {i, graph[i][j]};
+                   if(used.find(p) != used.end() || used.find({p.second, p.first}) != used.end()) continue;
+                   if(p.first <= p.second) res.push_back(p);
+                   else res.push_back({p.second, p.first});
+                   used.insert(p);
+               }
+           }*/
         cout << "Successfull\n";
         return res;
     }
 
-    set<int> &getPossibleColors(int k){
+    virtual set<int> &getPossibleColors(int k){
         pair<int,int> edge = edges[k];
         set<int> around = usedColorsAroundVertex[edge.first];
         for(auto x: usedColorsAroundVertex[edge.second]) around.insert(x);
@@ -189,7 +186,7 @@ private:
         else return empty;
     }
 
-    int onlyOneOption(int v){
+    virtual int onlyOneOption(int v){
         set<int> usedAround = usedColorsAroundVertex[v];
 
         if(usedAround.size() == 2){
@@ -199,17 +196,17 @@ private:
         return -1;
     }
 
-    vector<pair<pair<int,int>, int> > getLastColoring() {
+    virtual vector<pair<pair<int,int>, int> > getLastColoring() {
         vector<pair<pair<int,int>, int> > res(edges.size());
         for(auto x: colorForEdge) res[x.first] = {edges[x.first], x.second};
         return res;
     }
 
-    void saveColoring(){
+    virtual void saveColoring(){
         colorings.push_back(getLastColoring());
     }
 
-    void setColor(int color, int k){
+    virtual void setColor(int color, int k){
         pair<int,int> edge = edges[k];
   //      cout << "setting " << color << " for " << k << endl;
         colorForEdge[k] = color;
@@ -217,7 +214,7 @@ private:
         usedColorsAroundVertex[edge.second].insert(color);
     }
 
-    void clearColor(int color, int k){
+    virtual void clearColor(int color, int k){
         pair<int,int> edge = edges[k];
  //       cout << "clearing " << color << " for " << k << endl;
         colorForEdge.erase(k);
@@ -225,7 +222,7 @@ private:
         usedColorsAroundVertex[edge.second].erase(color);
     }
 
-    bool coloringIsOk(int k){
+    virtual bool coloringIsOk(int k){
         pair<int,int> p = edges[k];
 
         set<int> around = usedColorsAroundVertex[p.first];
@@ -237,7 +234,7 @@ private:
         return true;
     }
 
-    bool setColorAndTryNext(int color, int k){
+    virtual bool setColorAndTryNext(int color, int k){
         pair<int,int> p = edges[k];
         if(usedColorsAroundVertex[p.first].find(color) != usedColorsAroundVertex[p.first].end()) return false;
         if(usedColorsAroundVertex[p.second].find(color) != usedColorsAroundVertex[p.second].end()) return false;
@@ -249,7 +246,7 @@ private:
         return res;
     }
 
-    bool tryToColor(int k){
+    virtual bool tryToColor(int k){
         if(lookUps % 100000 == 0) cout << k << " " << lookUps<< endl;
         lookUps ++;
         if(!colorings.empty()) return false;
@@ -286,5 +283,4 @@ private:
 };
 
 
-#endif //GRAFY_TESTER_H
 

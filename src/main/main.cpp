@@ -15,11 +15,11 @@ int main( int argc, char *argv[] ) {
     Verifier * verifier = new Verifier();
     ArgsParser * parser = new ArgsParser();
 
-    string inputGraph = parser->parse(argc, argv).first;
-    string inputConfiguration = parser->parse(argc, argv).second;
+//    string inputGraph = parser->parse(argc, argv).first;
+//    string inputConfiguration = parser->parse(argc, argv).second;
 
-//    string inputGraph = (string)"./graphs/" + "5FLOWE3.58";
-//    string inputConfiguration = "./configurations/C(10,6).txt";
+    string inputGraph = (string)"./graphs/1/" + "SS7-2.34";
+    string inputConfiguration = "./configurations/C(10,6).txt";
 
     vector<vector<vector<int> > > graphs = reader->readGraphs(inputGraph);
     set<set<int> > configuration = reader->readStainerConfiguration(inputConfiguration);
