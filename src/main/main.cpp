@@ -4,27 +4,37 @@
 #include "Verifier.h"
 #include "testers/BruteForcer.h"
 #include "testers/BruteForcer_C_10_6.h"
+#include "ArgsParser.h"
 
 using namespace std;
 
-int main() {
+int main( int argc, char *argv[] ) {
 
     Reader * reader = new Reader();
     ColoringTester * tester = new BruteForcer_C_10_6();
     Verifier * verifier = new Verifier();
+    ArgsParser * parser = new ArgsParser();
 
-    string inputGraph = (string)"./../graphs/2/" + "SS4A.46";
-    string inputConfiguration = "./../configurations/C(10,6).txt";
+    string inputGraph = parser->parse(argc, argv).first;
+    string inputConfiguration = parser->parse(argc, argv).second;
+
+//    string inputGraph = (string)"./graphs/" + "5FLOWE3.58";
+//    string inputConfiguration = "./configurations/C(10,6).txt";
 
     vector<vector<vector<int> > > graphs = reader->readGraphs(inputGraph);
     set<set<int> > configuration = reader->readStainerConfiguration(inputConfiguration);
 
-    cout << "graph:\n";
+    cout << "Graphs:\n";
 
     For(k, 0, graphs.size()){
 
         cout << endl << "Graph number: " << k + 1 << endl;
         vector<vector<int> > graph = graphs[k];
+
+        if(!verifier->checkGraph(graph)){
+            cout << "Wrong graph" << endl;
+            continue;
+        }
 
         For(i, 0, graph.size()){
             cout << i << ": ";

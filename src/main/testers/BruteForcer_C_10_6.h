@@ -157,8 +157,9 @@ private:
         vector<pair<int,int> > res;
 
         srand((unsigned int) time(NULL));
-        usedVertices.insert(rand() % g.size());
-        cout << "Random start point: " << *usedVertices.begin() << endl;
+        int randomStartPoint = rand() % g.size();
+        usedVertices.insert(randomStartPoint);
+        cout << "Random start point: " << randomStartPoint << endl;
 
         cout << "start\n";
         while(usedEdges.size() < g.size()*3/2) {

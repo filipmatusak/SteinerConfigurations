@@ -8,7 +8,6 @@ using namespace std;
 
 class Reader{
 
-
 public:
     Reader(){
 
@@ -57,6 +56,7 @@ public:
             }
 
         }
+
 
 
         return graph;

@@ -15,6 +15,7 @@ public:
 
     }
 
+    // Test if coloring is valid according to configuration
     bool checkSolution(vector<vector<int> > &graph,
                        vector<pair<pair<int,int>, int> > &coloring,
                        set<set<int> > &configuration){
@@ -31,6 +32,23 @@ public:
             if(colorsForVertex[i].size() != 3) return false;
             if(configuration.find(colorsForVertex[i]) == configuration.end()) return false;
         }
+        return true;
+    }
+
+    // Test if graph is cubic
+    bool checkGraph(vector<vector<int> > &graph){
+        int n = (int) graph.size();
+        vector<set<int> > v(n);
+        For(i, 0, n) {
+            For(j, 0, graph[i].size()) {
+                v[graph[i][j]].insert(i);
+            }
+        }
+        For(i, 0, n)
+            if(v[i].size() != 3){
+                cout << "Vertex nuber: " << i << " has " << v[i].size() << " neighbours" << endl;
+                return false;
+            }
         return true;
     }
 };

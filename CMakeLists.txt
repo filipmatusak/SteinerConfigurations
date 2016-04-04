@@ -11,5 +11,7 @@ set(SOURCE_FILES
         src/main/common.h
         src/main/Verifier.h
         src/main/testers/ColoringTester.cpp
-        src/main/testers/ColoringTester.h)
+        src/main/testers/ColoringTester.h
+        src/main/ArgsParser.h
+        )
 add_executable(grafy ${SOURCE_FILES})
