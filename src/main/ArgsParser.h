@@ -13,7 +13,7 @@ class ArgsParser {
 public:
     ArgsParser(){}
 
-    pair<string, string> parse( int argc, char *argv[] ){
+    pair<string, string> parseColorTestArgs(int argc, char **argv){
         if(argc != 3){
             cout << "zadaj cestu ku grafu a konfiguracii ako parametre" << endl;
             exit(-1);

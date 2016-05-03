@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include "../common.h"
 #include "ColoringTester.h"
@@ -7,7 +7,6 @@ using namespace std;
 
 class BruteForcer : public ColoringTester{
 public:
-    BruteForcer(){ }
 
     vector<pair<int,int> > edges;
     vector<vector<int> > graph;
@@ -17,17 +16,26 @@ public:
     unordered_map<int, int> colorForEdge;
     vector<vector<pair<pair<int,int>, int> > > colorings;
     map<set<int>, set<int> > possibleColors;
-    set<int> allColors, empty;
+    set<int> allColors, empty, ignoreVerticles;
     int numberOfColors;
     long long lookUps = 0;
+    bool findOnlyFirst;
 
-    virtual bool test(const vector<vector<int> > graph_, const set<set<int> > config_){
+    BruteForcer(){ }
+
+    virtual bool test(const vector<vector<int> > graph_,
+                      const set<set<int> > config_,
+                      bool findOnlyFirst_ = true,
+                      set<int> * ignoreVerticles_ = NULL){
 
         cout << "preparing" << endl;
 
         graph = graph_;
         config = config_;
         edges = getEdges();
+        findOnlyFirst = findOnlyFirst_;
+        if(ignoreVerticles_ != NULL) ignoreVerticles = *ignoreVerticles_;
+        else ignoreVerticles = empty;
 
 //        cout << "edges:\n";
 //        for(auto x: edges) cout << x.first << " " << x.second << endl;
@@ -177,10 +185,16 @@ public:
         return res;
     }
 
+    virtual bool isIgnored(int k){
+        return ignoreVerticles.find(k) != ignoreVerticles.end();
+    }
+
     virtual set<int> &getPossibleColors(int k){
         pair<int,int> edge = edges[k];
-        set<int> around = usedColorsAroundVertex[edge.first];
-        for(auto x: usedColorsAroundVertex[edge.second]) around.insert(x);
+
+        set<int> around;
+        if(isIgnored(edge.first))  around = usedColorsAroundVertex[edge.first];
+        if(isIgnored(edge.second)) for(auto x: usedColorsAroundVertex[edge.second]) around.insert(x);
         if(around.size() == 0 ) return allColors;
         else if(around.size() < 3) return possibleColors[around];
         else return empty;
@@ -188,6 +202,7 @@ public:
 
     virtual int onlyOneOption(int v){
         set<int> usedAround = usedColorsAroundVertex[v];
+        if(isIgnored(v)) return -1;
 
         if(usedAround.size() == 2){
             set<int> res = possibleColors[usedAround];
@@ -224,12 +239,13 @@ public:
 
     virtual bool coloringIsOk(int k){
         pair<int,int> p = edges[k];
+        // test ignorance
 
         set<int> around = usedColorsAroundVertex[p.first];
-        if(around.size() == 3 && config.find(around) == config.end()) return false;
+        if(!isIgnored(p.first) && around.size() == 3 && config.find(around) == config.end()) return false;
 
         around = usedColorsAroundVertex[p.second];
-        if(around.size() == 3 && config.find(around) == config.end()) return false;
+        if(!isIgnored(p.second) && around.size() == 3 && config.find(around) == config.end()) return false;
 
         return true;
     }
@@ -249,7 +265,7 @@ public:
     virtual bool tryToColor(int k){
         if(lookUps % 100000 == 0) cout << k << " " << lookUps<< endl;
         lookUps ++;
-        if(!colorings.empty()) return false;
+        if(findOnlyFirst && !colorings.empty()) return false;
         if(k == edges.size()){
   //          cout << "OK\n";
             saveColoring();

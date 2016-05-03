@@ -1,4 +1,4 @@
-g++-4.8 -std=c++11  ./src/main/main.cpp
+g++-4.8 -std=c++11 ./src/main/main.cpp
         ./src/main/Reader.h
         ./src/main/testers/BruteForcer.h
         ./src/main/testers/BruteForcer_C_10_6.h
@@ -6,4 +6,6 @@ g++-4.8 -std=c++11  ./src/main/main.cpp
         ./src/main/Verifier.h
         ./src/main/testers/ColoringTester.cpp
         ./src/main/testers/ColoringTester.h
-        ./src/main/ArgsParser.h -o graphs 
+        ./src/main/ArgsParser.h
+        ./src/main/tests/ColorTest.h
+        ./src/main/tests/RemovabilityTest.h

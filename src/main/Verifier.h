@@ -18,7 +18,8 @@ public:
     // Test if coloring is valid according to configuration
     bool checkSolution(vector<vector<int> > &graph,
                        vector<pair<pair<int,int>, int> > &coloring,
-                       set<set<int> > &configuration){
+                       set<set<int> > &configuration,
+                       set<int> *ignore = NULL){
         vector<set<int> > colorsForVertex(graph.size());
         For(i, 0, coloring.size()){
             pair<int,int> edge = coloring[i].first;
@@ -28,6 +29,7 @@ public:
         }
 
         For(i, 0, graph.size()){
+            if(ignore != NULL && ignore->find(i) != ignore->end()) continue;
       //      cout << "i: " << i << " -> "; for(auto x: colorsForVertex[i]) cout << x << " "; cout << endl;
             if(colorsForVertex[i].size() != 3) return false;
             if(configuration.find(colorsForVertex[i]) == configuration.end()) return false;

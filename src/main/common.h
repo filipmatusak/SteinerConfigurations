@@ -1,3 +1,4 @@
+#pragma once
 
 #ifndef GRAFY_COMMON_H
 #define GRAFY_COMMON_H

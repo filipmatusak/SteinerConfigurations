@@ -10,7 +10,10 @@
 using namespace std;
 
 class ColoringTester {
-public: virtual bool test(const vector<vector<int> > graph_, const set<set<int> > config_) = 0;
+public: virtual bool test(const vector<vector<int> > graph_,
+                          const set<set<int> > config_,
+                          bool findOnlyFirst_ = true,
+                          set<int> *ignoreVerticles_ = NULL) = 0;
     virtual vector<pair<pair<int,int>, int> > getColoring() = 0;
 };
 

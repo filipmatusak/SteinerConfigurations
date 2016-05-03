@@ -13,5 +13,6 @@ set(SOURCE_FILES
         src/main/testers/ColoringTester.cpp
         src/main/testers/ColoringTester.h
         src/main/ArgsParser.h
-        )
+        src/main/tests/ColorTest.h
+        src/main/tests/RemovabilityTest.h)
 add_executable(grafy ${SOURCE_FILES})
