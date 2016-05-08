@@ -263,7 +263,7 @@ public:
     }
 
     virtual bool tryToColor(int k){
-        if(lookUps % 100000 == 0) cout << k << " " << lookUps<< endl;
+     //   if(lookUps % 100000 == 0) cout << k << " " << lookUps<< endl;
         lookUps ++;
         if(findOnlyFirst && !colorings.empty()) return false;
         if(k == edges.size()){

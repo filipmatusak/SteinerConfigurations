@@ -25,7 +25,7 @@ public:
 //        string inputGraph = parser->parseColorTestArgs(argc, argv).first;
 //        string inputConfiguration = parser->parseColorTestArgs(argc, argv).second;
 
-        string inputGraph = (string)"./graphs/" + "petersen";
+        string inputGraph = (string)"./graphs/1/" + "5FLOWE3.34";
         string inputConfiguration = "./configurations/C(10,6).txt";
 
         vector<vector<vector<int> > > graphs = reader->readGraphs(inputGraph);
